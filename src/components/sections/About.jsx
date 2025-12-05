@@ -25,11 +25,11 @@ const About = () => {
                     <ScrollReveal animation="slideRight">
                         <div className="glass-effect rounded-xl p-8">
                             <h3 className="text-2xl font-bold text-gradient mb-6">
-                                14 Years of Excellence
+                                Professional Excellence
                             </h3>
                             <div className="space-y-4 text-dark-muted">
                                 <p>
-                                    I'm a passionate full-stack developer with over 14 years of experience
+                                    I'm a passionate full-stack developer with extensive experience
                                     building robust web applications. My journey in software development has
                                     been driven by a love for creating elegant solutions to complex problems.
                                 </p>
@@ -49,11 +49,11 @@ const About = () => {
                             {/* Stats */}
                             <div className="grid grid-cols-3 gap-4 mt-8">
                                 <div className="text-center">
-                                    <div className="text-3xl font-bold text-gradient">14+</div>
-                                    <div className="text-sm text-dark-muted">Years Exp.</div>
+                                    <div className="text-3xl font-bold text-gradient">Expert</div>
+                                    <div className="text-sm text-dark-muted">Level</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-3xl font-bold text-gradient">50+</div>
+                                    <div className="text-3xl font-bold text-gradient">10+</div>
                                     <div className="text-sm text-dark-muted">Projects</div>
                                 </div>
                                 <div className="text-center">

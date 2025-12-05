@@ -92,7 +92,7 @@ const Hero = () => {
                         transition={{ delay: 1.2 }}
                         className="text-lg text-dark-muted max-w-2xl mx-auto mb-12"
                     >
-                        With 14 years of experience crafting elegant web solutions using Python, Flask,
+                        Crafting elegant web solutions using Python, Flask,
                         JavaScript, and modern frameworks. Transforming ideas into powerful digital experiences.
                     </motion.p>
 
@@ -122,22 +122,22 @@ const Hero = () => {
                             Get In Touch
                         </motion.button>
                     </motion.div>
-                </motion.div>
 
-                {/* Scroll Indicator */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2, duration: 1 }}
-                    className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-                >
+                    {/* Scroll Indicator - Moved under buttons */}
                     <motion.div
-                        animate={{ y: [0, 10, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                        className="text-accent-primary cursor-pointer"
-                        onClick={() => smoothScroll('about')}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 2, duration: 1 }}
+                        className="mt-8"
                     >
-                        <ArrowDown size={32} />
+                        <motion.div
+                            animate={{ y: [0, 10, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                            className="text-accent-primary cursor-pointer flex justify-center"
+                            onClick={() => smoothScroll('about')}
+                        >
+                            <ArrowDown size={32} />
+                        </motion.div>
                     </motion.div>
                 </motion.div>
             </div>

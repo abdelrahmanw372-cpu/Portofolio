@@ -67,8 +67,12 @@ const ProjectCard = ({ project, index }) => {
             {/* Expanded Content */}
             <motion.div
                 initial={false}
-                animate={{ height: isExpanded ? 'auto' : 0, opacity: isExpanded ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
+                animate={{
+                    height: isExpanded ? 'auto' : 0,
+                    opacity: isExpanded ? 1 : 0,
+                    marginTop: isExpanded ? 16 : 0
+                }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
                 className="overflow-hidden"
             >
                 <div className="pt-4 border-t border-dark-border">
