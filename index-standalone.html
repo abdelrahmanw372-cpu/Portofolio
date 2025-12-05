@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Abdelrahman Waleed - Full-Stack Developer with 14 years of experience">
+    <title>Abdelrahman Waleed | Full-Stack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+            /* Hide default cursor */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #13131a 50%, #0a0a0f 100%);
+            color: #e4e4e7;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0f;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #6366f1;
+            border-radius: 10px;
+            border: 2px solid #0a0a0f;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b5cf6;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #6366f1, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glass Effect */
+        .glass-effect {
+            background: rgba(19, 19, 26, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(31, 31, 46, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-effect:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        /* --- Shimmer Effect --- */
+        .shimmer-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right,
+                    transparent,
+                    rgba(255, 255, 255, 0.05),
+                    transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
+        .shimmer-effect:hover::before {
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 200%;
+            }
+        }
+
+        /* --- Moving Glow (Snake Border) - Restored for Projects Only --- */
+        .moving-glow {
+            position: relative;
+        }
+
+        .moving-glow span {
+            position: absolute;
+            display: block;
+        }
+
+        .moving-glow span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #6366f1);
+            animation: btn-anim1 2s linear infinite;
+        }
+
+        @keyframes btn-anim1 {
+            0% {
+                left: -100%;
+            }
+
+            50%,
+            100% {
+                left: 100%;
+            }
+        }
+
+        .moving-glow span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #6366f1);
+            animation: btn-anim2 2s linear infinite;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes btn-anim2 {
+            0% {
+                top: -100%;
+            }
+
+            50%,
+            100% {
+                top: 100%;
+            }
+        }
+
+        .moving-glow span:nth-child(3) {
+            bottom: 0;
+            right: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, #6366f1);
+            animation: btn-anim3 2s linear infinite;
+            animation-delay: 1s;
+        }
+
+        @keyframes btn-anim3 {
+            0% {
+                right: -100%;
+            }
+
+            50%,
+            100% {
+                right: 100%;
+            }
+        }
+
+        .moving-glow span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, #6366f1);
+            animation: btn-anim4 2s linear infinite;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes btn-anim4 {
+            0% {
+                bottom: -100%;
+            }
+
+            50%,
+            100% {
+                bottom: 100%;
+            }
+        }
+
+        /* --- Scroll Reveal Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Stagger delays */
+        .delay-100 {
+            transition-delay: 0.1s;
+        }
+
+        .delay-200 {
+            transition-delay: 0.2s;
+        }
+
+        .delay-300 {
+            transition-delay: 0.3s;
+        }
+
+        .delay-400 {
+            transition-delay: 0.4s;
+        }
+
+        .delay-500 {
+            transition-delay: 0.5s;
+        }
+
+        /* --- Button Animations --- */
+        button,
+        .btn-anim {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        button:hover,
+        .btn-anim:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        button:active,
+        .btn-anim:active {
+            transform: translateY(1px) scale(0.95);
+            box-shadow: 0 5px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* --- Particle Stream Cursor --- */
+        #cursor-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        /* Skill Bar Animation */
+        .skill-bar {
+            transition: width 1.5s ease-out;
+        }
+
+        /* Background Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Typing Cursor */
+        .typing-cursor {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Navigation Active */
+        .nav-active {
+            color: #6366f1;
+            border-bottom: 2px solid #6366f1;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-gray-100">
+    <!-- Cursor Canvas -->
+    <canvas id="cursor-canvas"></canvas>
+
+    <!-- Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="text-2xl font-bold reveal-left" onclick="scrollToSection('home')">
+                    <span class="text-gradient">AW</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8 reveal-right">
+                    <a href="#home"
+                        class="nav-link btn-anim px-4 py-2 text-sm font-medium hover:text-blue-500 transition-colors"
+                        onclick="scrollToSection('home')">Home</a>
+                    <a href="#about"
+                        class="nav-link btn-anim px-4 py-2 text-sm font-medium hover:text-blue-500 transition-colors"
+                        onclick="scrollToSection('about')">About</a>
+                    <a href="#experience"
+                        class="nav-link btn-anim px-4 py-2 text-sm font-medium hover:text-blue-500 transition-colors"
+                        onclick="scrollToSection('experience')">Experience</a>
+                    <a href="#projects"
+                        class="nav-link btn-anim px-4 py-2 text-sm font-medium hover:text-blue-500 transition-colors"
+                        onclick="scrollToSection('projects')">Projects</a>
+                    <a href="#contact"
+                        class="nav-link btn-anim px-4 py-2 text-sm font-medium hover:text-blue-500 transition-colors"
+                        onclick="scrollToSection('contact')">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-white btn-anim">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <p class="text-blue-500 text-lg mb-4 font-medium reveal delay-100">
+                    Welcome to my portfolio</p>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 reveal delay-200">
+                    <span class="text-gray-100">I'm </span>
+                    if (window.scrollY > 50) {
+                    navbar.classList.add('glass-effect');
+                    } else {
+                    navbar.classList.remove('glass-effect');
+                    }
+                    });
+
+                    // --- Scroll Reveal Observer ---
+                    const revealObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    }
+                    });
+                    }, {
+                    threshold: 0.1,
+                    rootMargin: '50px'
+                    });
+
+                    // Observe all reveal elements
+                    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+                    revealObserver.observe(el);
+                    });
+
+                    // Skill Bar Animation
+                    const observerOptions = {
+                    threshold: 0.5
+                    };
+
+                    const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                    const skillBars = entry.target.querySelectorAll('.skill-bar');
+                    skillBars.forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-width');
+                    });
+                    }
+                    });
+                    }, observerOptions);
+
+                    const aboutSection = document.getElementById('about');
+                    if (aboutSection) {
+                    observer.observe(aboutSection);
+                    }
+
+                    // --- Particle Stream Cursor (Dots/Stars) ---
+                    const cursorCanvas = document.getElementById('cursor-canvas');
+                    const cCtx = cursorCanvas.getContext('2d');
+
+                    let cMouseX = window.innerWidth / 2;
+                    let cMouseY = window.innerHeight / 2;
+
+                    cursorCanvas.width = window.innerWidth;
+                    cursorCanvas.height = window.innerHeight;
+
+                    window.addEventListener('mousemove', (e) => {
+                    cMouseX = e.clientX;
+                    cMouseY = e.clientY;
+                    // Spawn particles on move for density
+                    for (let i = 0; i < 3; i++) { cursorParticles.push(new CursorParticle(cMouseX, cMouseY)); } }); let
+                        cursorParticles=[]; class CursorParticle { constructor(x, y) { this.x=x + (Math.random() - 0.5)
+                        * 5; this.y=y + (Math.random() - 0.5) * 5; this.size=Math.random() * 3 + 1; // 1-4px dots
+                        this.speedX=(Math.random() - 0.5) * 2; this.speedY=(Math.random() - 0.5) * 2; this.life=1.0;
+                        this.decay=Math.random() * 0.05 + 0.02; // Fast decay this.color=`hsl(${Math.random() * 60 +
+                        240}, 100%, 70%)`; // Blue-Purple range } update() { this.x +=this.speedX; this.y +=this.speedY;
+                        this.life -=this.decay; this.size *=0.95; // Shrink } draw() { cCtx.fillStyle=this.color;
+                        cCtx.globalAlpha=this.life; cCtx.beginPath(); cCtx.arc(this.x, this.y, this.size, 0, Math.PI *
+                        2); cCtx.fill(); cCtx.globalAlpha=1.0; } } function animateCursor() { cCtx.clearRect(0, 0,
+                        cursorCanvas.width, cursorCanvas.height); // Draw main cursor dot cCtx.fillStyle='#fff' ;
+                        cCtx.beginPath(); cCtx.arc(cMouseX, cMouseY, 4, 0, Math.PI * 2); cCtx.fill(); // Update and draw
+                        particles for (let i=0; i < cursorParticles.length; i++) { cursorParticles[i].update();
+                        cursorParticles[i].draw(); if (cursorParticles[i].life <=0) { cursorParticles.splice(i, 1); i--;
+                        } } requestAnimationFrame(animateCursor); } animateCursor(); // Background Canvas Animation
+                        (Enhanced) const canvas=document.getElementById('bg-canvas'); const ctx=canvas.getContext('2d');
+                        let particles=[]; canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+                        window.addEventListener('resize', ()=> {
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                        cursorCanvas.width = window.innerWidth;
+                        cursorCanvas.height = window.innerHeight;
+                        });
+
+                        class Particle {
+                        constructor() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        // Increased size by ~80% (from 1-3 to 1.8-5.4)
+                        this.size = (Math.random() * 2 + 1) * 1.8;
+                        this.speedX = Math.random() * 0.5 - 0.25;
+                        this.speedY = Math.random() * 0.5 - 0.25;
+                        // Increased opacity for clarity
+                        this.opacity = Math.random() * 0.5 + 0.3;
+                        }
+
+                        update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+
+                        const dx = cMouseX - this.x;
+                        const dy = cMouseY - this.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        // Enhanced interaction: larger radius and stronger force
+                        if (distance < 150) { // Increased from 100 const force=(150 - distance) / 150; this.x -=(dx /
+                            distance) * force * 4; // Increased force from 2 to 4 this.y -=(dy / distance) * force * 4;
+                            } if (this.x < 0) this.x=canvas.width; if (this.x> canvas.width) this.x = 0;
+                            if (this.y < 0) this.y=canvas.height; if (this.y> canvas.height) this.y = 0;
+                                }
+
+                                draw() {
+                                ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity})`;
+                                ctx.beginPath();
+                                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                                ctx.fill();
+                                }
+                                }
+
+                                function init() {
+                                particles = [];
+                                const particleCount = Math.min(100, Math.floor((canvas.width * canvas.height) /
+                                10000));
+                                for (let i = 0; i < particleCount; i++) { particles.push(new Particle()); } } function
+                                    animate() { ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                    particles.forEach(particle=> {
+                                    particle.update();
+                                    particle.draw();
+                                    });
+
+                                    particles.forEach((particleA, indexA) => {
+                                    particles.slice(indexA + 1).forEach(particleB => {
+                                    const dx = particleA.x - particleB.x;
+                                    const dy = particleA.y - particleB.y;
+                                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                                    // Enhanced connection visibility
+                                    if (distance < 120) { // Increased from 100 // Clearer lines
+                                        ctx.strokeStyle=`rgba(139, 92, 246, ${0.4 * (1 - distance / 120)})`;
+                                        ctx.lineWidth=0.8; // Thicker lines ctx.beginPath(); ctx.moveTo(particleA.x,
+                                        particleA.y); ctx.lineTo(particleB.x, particleB.y); ctx.stroke(); } }); });
+                                        requestAnimationFrame(animate); } init(); animate(); </script>
+</body>
+
+</html>
