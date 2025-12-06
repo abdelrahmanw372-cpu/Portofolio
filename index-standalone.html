@@ -381,54 +381,518 @@
     <main class="relative z-10">
         <!-- Hero Section -->
         <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                <p class="text-blue-500 text-lg mb-4 font-medium reveal delay-100">
-                    Welcome to my portfolio</p>
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 reveal delay-200">
-                    <span class="text-gray-100">I'm </span>
-                    if (window.scrollY > 50) {
-                    navbar.classList.add('glass-effect');
-                    } else {
-                    navbar.classList.remove('glass-effect');
+            ```
+            0% {
+            bottom: -100%;
+            }
+
+            50%,
+            100% {
+            bottom: 100%;
+            }
+            }
+
+            /* --- Scroll Reveal Animations --- */
+            .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+            will-change: opacity, transform;
+            }
+
+            .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            }
+
+            .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+            }
+
+            .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+            }
+
+            .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+            }
+
+            .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+            }
+
+            .reveal-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+
+            .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+            }
+
+            /* Stagger delays */
+            .delay-100 {
+            transition-delay: 0.1s;
+            }
+
+            .delay-200 {
+            transition-delay: 0.2s;
+            }
+
+            .delay-300 {
+            transition-delay: 0.3s;
+            }
+
+            .delay-400 {
+            transition-delay: 0.4s;
+            }
+
+            .delay-500 {
+            transition-delay: 0.5s;
+            }
+
+            /* --- Button Animations --- */
+            button,
+            .btn-anim {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: none;
+            }
+
+            button:hover,
+            .btn-anim:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4);
+            }
+
+            button:active,
+            .btn-anim:active {
+            transform: translateY(1px) scale(0.95);
+            box-shadow: 0 5px 10px rgba(99, 102, 241, 0.3);
+            }
+
+            /* --- Particle Stream Cursor --- */
+            #cursor-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            pointer-events: none;
+            }
+
+            /* Skill Bar Animation */
+            .skill-bar {
+            transition: width 1.5s ease-out;
+            }
+
+            /* Background Canvas */
+            #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            }
+
+            /* Typing Cursor */
+            .typing-cursor {
+            animation: pulse 1s infinite;
+            }
+
+            @keyframes pulse {
+
+            0%,
+            100% {
+            opacity: 1;
+            }
+
+            50% {
+            opacity: 0.5;
+            }
+            }
+
+            /* Navigation Active */
+            .nav-active {
+            color: #6366f1;
+            border-bottom: 2px solid #6366f1;
+            }
+            </style>
+            </head>
+
+            <body class="bg-gray-900 text-gray-100">
+                <!-- Cursor Canvas -->
+                <canvas id="cursor-canvas"></canvas>
+
+                <!-- Background Canvas -->
+                <canvas id="bg-canvas"></canvas>
+
+                <!-- Navigation -->
+                <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center justify-between h-20">
+                            <div class="text-2xl font-bold reveal-left" onclick="scrollToSection('home')">
+                                <span class="text-gradient">AW</span>
+                            </div>
+                            <div class="hidden md:flex items-center space-x-8 reveal-right">
+                                <a href="#home"
+                                    class="nav-link btn-anim px-4 py-2 text-sm font-medium hover:text-blue-500 transition-colors"
+                                    onclick="scrollToSection('home')">Home</a>
+                                <a href="#about"
+                                    class="nav-link btn-anim px-4 py-2 text-sm font-medium hover:text-blue-500 transition-colors"
+                                    onclick="scrollToSection('about')">About</a>
+                                <a href="#experience"
+                                    class="nav-link btn-anim px-4 py-2 text-sm font-medium hover:text-blue-500 transition-colors"
+                                    onclick="scrollToSection('experience')">Experience</a>
+                                <a href="#projects"
+                                    class="nav-link btn-anim px-4 py-2 text-sm font-medium hover:text-blue-500 transition-colors"
+                                    onclick="scrollToSection('projects')">Projects</a>
+                                <a href="#contact"
+                                    class="nav-link btn-anim px-4 py-2 text-sm font-medium hover:text-blue-500 transition-colors"
+                                    onclick="scrollToSection('contact')">Contact</a>
+                            </div>
+                            <button id="mobile-menu-btn" class="md:hidden text-white btn-anim">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 6h16M4 12h16M4 18h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Main Content -->
+                <main class="relative z-10">
+                    <!-- Hero Section -->
+                    <section id="home"
+                        class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                            <p class="text-blue-500 text-lg mb-4 font-medium reveal delay-100">
+                                Welcome to my portfolio</p>
+                            <h1 class="text-5xl md:text-7xl font-bold mb-6 reveal delay-200">
+                                <span class="text-gray-100">I'm </span>
+                                <span class="text-gradient">Abdelrahman Waleed</span>
+                            </h1>
+                            <p class="text-xl md:text-2xl text-gray-400 mb-8 reveal delay-300">
+                                Full-Stack Developer | 14 Years Experience
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center reveal delay-400">
+                                <a href="#contact"
+                                    class="btn-anim px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold hover:shadow-lg transition-all">
+                                    Get In Touch
+                                </a>
+                                <a href="#projects"
+                                    class="btn-anim px-8 py-4 border-2 border-blue-500 rounded-lg font-semibold hover:bg-blue-500/10 transition-all">
+                                    View Projects
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- About Section -->
+                    <section id="about" class="py-20 relative">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <h2 class="text-4xl font-bold text-center mb-16 reveal">
+                                <span class="text-gradient">About Me</span>
+                            </h2>
+                            <div class="grid md:grid-cols-2 gap-12">
+                                <div class="glass-effect shimmer-effect p-8 rounded-2xl reveal-left">
+                                    <h3 class="text-2xl font-bold mb-4 text-gradient">Who I Am</h3>
+                                    <p class="text-gray-300 leading-relaxed mb-4">
+                                        I'm a passionate Full-Stack Developer with 14 years of experience in building
+                                        scalable web
+                                        applications and solving complex technical challenges.
+                                    </p>
+                                    <p class="text-gray-300 leading-relaxed">
+                                        My expertise spans across modern web technologies, cloud infrastructure, and
+                                        creating
+                                        seamless user experiences.
+                                    </p>
+                                </div>
+                                <div class="glass-effect shimmer-effect p-8 rounded-2xl reveal-right">
+                                    <h3 class="text-2xl font-bold mb-6 text-gradient">Skills</h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-gray-300">JavaScript/TypeScript</span>
+                                                <span class="text-blue-500">95%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                                <div class="skill-bar bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
+                                                    data-width="95%" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-gray-300">React/Next.js</span>
+                                                <span class="text-blue-500">90%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                                <div class="skill-bar bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
+                                                    data-width="90%" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-gray-300">Node.js/Express</span>
+                                                <span class="text-blue-500">88%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                                <div class="skill-bar bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
+                                                    data-width="88%" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-gray-300">Cloud & DevOps</span>
+                                                <span class="text-blue-500">85%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                                <div class="skill-bar bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
+                                                    data-width="85%" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Experience Section -->
+                    <section id="experience" class="py-20 relative">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <h2 class="text-4xl font-bold text-center mb-16 reveal">
+                                <span class="text-gradient">Experience</span>
+                            </h2>
+                            <div class="space-y-8">
+                                <div class="glass-effect shimmer-effect p-8 rounded-2xl reveal delay-100">
+                                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                        <h3 class="text-2xl font-bold text-gradient">Senior Full-Stack Developer</h3>
+                                        <span class="text-blue-500 font-medium">2018 - Present</span>
+                                    </div>
+                                    <p class="text-gray-400 mb-4">Tech Company Inc.</p>
+                                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                        <li>Led development of scalable microservices architecture</li>
+                                        <li>Mentored junior developers and conducted code reviews</li>
+                                        <li>Improved application performance by 40%</li>
+                                    </ul>
+                                </div>
+                                <div class="glass-effect shimmer-effect p-8 rounded-2xl reveal delay-200">
+                                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                        <h3 class="text-2xl font-bold text-gradient">Full-Stack Developer</h3>
+                                        <span class="text-blue-500 font-medium">2015 - 2018</span>
+                                    </div>
+                                    <p class="text-gray-400 mb-4">Digital Solutions Ltd.</p>
+                                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                        <li>Developed and maintained multiple client projects</li>
+                                        <li>Implemented CI/CD pipelines</li>
+                                        <li>Collaborated with cross-functional teams</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Projects Section -->
+                    <section id="projects" class="py-20 relative">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <h2 class="text-4xl font-bold text-center mb-16 reveal">
+                                <span class="text-gradient">Featured Projects</span>
+                            </h2>
+                            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <div
+                                    class="glass-effect shimmer-effect moving-glow p-6 rounded-2xl reveal-scale delay-100">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <h3 class="text-xl font-bold mb-3 text-gradient">E-Commerce Platform</h3>
+                                    <p class="text-gray-400 mb-4">A full-featured online shopping platform with
+                                        real-time
+                                        inventory management</p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span
+                                            class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">React</span>
+                                        <span
+                                            class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">Node.js</span>
+                                        <span
+                                            class="px-3 py-1 bg-pink-500/20 text-pink-400 rounded-full text-sm">MongoDB</span>
+                                    </div>
+                                    <a href="#"
+                                        class="btn-anim inline-block px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold">
+                                        View Project
+                                    </a>
+                                </div>
+                                <div
+                                    class="glass-effect shimmer-effect moving-glow p-6 rounded-2xl reveal-scale delay-200">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <h3 class="text-xl font-bold mb-3 text-gradient">Task Management App</h3>
+                                    <p class="text-gray-400 mb-4">Collaborative project management tool with real-time
+                                        updates</p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span
+                                            class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Next.js</span>
+                                        <span
+                                            class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">PostgreSQL</span>
+                                        <span
+                                            class="px-3 py-1 bg-pink-500/20 text-pink-400 rounded-full text-sm">WebSocket</span>
+                                    </div>
+                                    <a href="#"
+                                        class="btn-anim inline-block px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold">
+                                        View Project
+                                    </a>
+                                </div>
+                                <div
+                                    class="glass-effect shimmer-effect moving-glow p-6 rounded-2xl reveal-scale delay-300">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <h3 class="text-xl font-bold mb-3 text-gradient">Analytics Dashboard</h3>
+                                    <p class="text-gray-400 mb-4">Real-time data visualization and reporting platform
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span
+                                            class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Vue.js</span>
+                                        <span
+                                            class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">D3.js</span>
+                                        <span
+                                            class="px-3 py-1 bg-pink-500/20 text-pink-400 rounded-full text-sm">Firebase</span>
+                                    </div>
+                                    <a href="#"
+                                        class="btn-anim inline-block px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold">
+                                        View Project
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Contact Section -->
+                    <section id="contact" class="py-20 relative">
+                        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <h2 class="text-4xl font-bold text-center mb-16 reveal">
+                                <span class="text-gradient">Get In Touch</span>
+                            </h2>
+                            <div class="glass-effect shimmer-effect p-8 rounded-2xl reveal">
+                                <form class="space-y-6">
+                                    <div>
+                                        <label class="block text-gray-300 mb-2">Name</label>
+                                        <input type="text"
+                                            class="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-300 mb-2">Email</label>
+                                        <input type="email"
+                                            class="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-300 mb-2">Message</label>
+                                        <textarea rows="5"
+                                            class="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"></textarea>
+                                    </div>
+                                    <button type="submit"
+                                        class="btn-anim w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold">
+                                        Send Message
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+
+                <script>
+                    // Smooth Scroll Function
+                    function scrollToSection(sectionId) {
+                        const section = document.getElementById(sectionId);
+                        if (section) {
+                            section.scrollIntoView({ behavior: 'smooth' });
+                        }
                     }
+
+                    // Navigation Active State
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    const sections = document.querySelectorAll('section');
+
+                    window.addEventListener('scroll', () => {
+                        let current = '';
+                        sections.forEach(section => {
+                            const sectionTop = section.offsetTop;
+                            const sectionHeight = section.clientHeight;
+                            if (window.scrollY >= (sectionTop - 200)) {
+                                current = section.getAttribute('id');
+                            }
+                        });
+
+                        navLinks.forEach(link => {
+                            link.classList.remove('nav-active');
+                            if (link.getAttribute('href').substring(1) === current) {
+                                link.classList.add('nav-active');
+                            }
+                        });
+                    });
+
+                    // Navbar Glass Effect on Scroll
+                    const navbar = document.getElementById('navbar');
+                    window.addEventListener('scroll', () => {
+                        if (window.scrollY > 50) {
+                            navbar.classList.add('glass-effect');
+                        } else {
+                            navbar.classList.remove('glass-effect');
+                        }
                     });
 
                     // --- Scroll Reveal Observer ---
                     const revealObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    }
-                    });
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('active');
+                            }
+                        });
                     }, {
-                    threshold: 0.1,
-                    rootMargin: '50px'
+                        threshold: 0.1,
+                        rootMargin: '50px'
                     });
 
                     // Observe all reveal elements
                     document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
-                    revealObserver.observe(el);
+                        revealObserver.observe(el);
                     });
 
                     // Skill Bar Animation
                     const observerOptions = {
-                    threshold: 0.5
+                        threshold: 0.5
                     };
 
                     const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                    const skillBars = entry.target.querySelectorAll('.skill-bar');
-                    skillBars.forEach(bar => {
-                    bar.style.width = bar.getAttribute('data-width');
-                    });
-                    }
-                    });
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const skillBars = entry.target.querySelectorAll('.skill-bar');
+                                skillBars.forEach(bar => {
+                                    bar.style.width = bar.getAttribute('data-width');
+                                });
+                            }
+                        });
                     }, observerOptions);
 
                     const aboutSection = document.getElementById('about');
                     if (aboutSection) {
-                    observer.observe(aboutSection);
+                        observer.observe(aboutSection);
                     }
 
                     // --- Particle Stream Cursor (Dots/Stars) ---
@@ -442,90 +906,190 @@
                     cursorCanvas.height = window.innerHeight;
 
                     window.addEventListener('mousemove', (e) => {
-                    cMouseX = e.clientX;
-                    cMouseY = e.clientY;
-                    // Spawn particles on move for density
-                    for (let i = 0; i < 3; i++) { cursorParticles.push(new CursorParticle(cMouseX, cMouseY)); } }); let
-                        cursorParticles=[]; class CursorParticle { constructor(x, y) { this.x=x + (Math.random() - 0.5)
-                        * 5; this.y=y + (Math.random() - 0.5) * 5; this.size=Math.random() * 3 + 1; // 1-4px dots
-                        this.speedX=(Math.random() - 0.5) * 2; this.speedY=(Math.random() - 0.5) * 2; this.life=1.0;
-                        this.decay=Math.random() * 0.05 + 0.02; // Fast decay this.color=`hsl(${Math.random() * 60 +
-                        240}, 100%, 70%)`; // Blue-Purple range } update() { this.x +=this.speedX; this.y +=this.speedY;
-                        this.life -=this.decay; this.size *=0.95; // Shrink } draw() { cCtx.fillStyle=this.color;
-                        cCtx.globalAlpha=this.life; cCtx.beginPath(); cCtx.arc(this.x, this.y, this.size, 0, Math.PI *
-                        2); cCtx.fill(); cCtx.globalAlpha=1.0; } } function animateCursor() { cCtx.clearRect(0, 0,
-                        cursorCanvas.width, cursorCanvas.height); // Draw main cursor dot cCtx.fillStyle='#fff' ;
-                        cCtx.beginPath(); cCtx.arc(cMouseX, cMouseY, 4, 0, Math.PI * 2); cCtx.fill(); // Update and draw
-                        particles for (let i=0; i < cursorParticles.length; i++) { cursorParticles[i].update();
-                        cursorParticles[i].draw(); if (cursorParticles[i].life <=0) { cursorParticles.splice(i, 1); i--;
-                        } } requestAnimationFrame(animateCursor); } animateCursor(); // Background Canvas Animation
-                        (Enhanced) const canvas=document.getElementById('bg-canvas'); const ctx=canvas.getContext('2d');
-                        let particles=[]; canvas.width=window.innerWidth; canvas.height=window.innerHeight;
-                        window.addEventListener('resize', ()=> {
+                        cMouseX = e.clientX;
+                        cMouseY = e.clientY;
+                        // Spawn particles on move for density
+                        for (let i = 0; i < 3; i++) {
+                            cursorParticles.push(new CursorParticle(cMouseX, cMouseY));
+                        }
+                    });
+
+                    let cursorParticles = [];
+
+                    class CursorParticle {
+                        constructor(x, y) {
+                            this.x = x + (Math.random() - 0.5) * 5;
+                            this.y = y + (Math.random() - 0.5) * 5;
+                            this.size = Math.random() * 3 + 1; // 1-4px dots
+                            this.speedX = (Math.random() - 0.5) * 2;
+                            this.speedY = (Math.random() - 0.5) * 2;
+                            this.life = 1.0;
+                            this.decay = Math.random() * 0.05 + 0.02; // Fast decay
+                            this.color = `hsl(${Math.random() * 60 + 240}, 100%, 70%)`; // Blue-Purple range
+                        }
+
+                        update() {
+                            this.x += this.speedX;
+                            this.y += this.speedY;
+                            this.life -= this.decay;
+                            this.size *= 0.95; // Shrink
+                        }
+
+                        draw() {
+                            cCtx.fillStyle = this.color;
+                            cCtx.globalAlpha = this.life;
+                            cCtx.beginPath();
+                            cCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                            cCtx.fill();
+                            cCtx.globalAlpha = 1.0;
+                        }
+                    }
+
+                    function animateCursor() {
+                        cCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
+
+                        // Draw main cursor dot
+                        cCtx.fillStyle = '#fff';
+                        cCtx.beginPath();
+                        cCtx.arc(cMouseX, cMouseY, 4, 0, Math.PI * 2);
+                        cCtx.fill();
+
+                        // Update and draw particles
+                        for (let i = 0; i < cursorParticles.length; i++) {
+                            cursorParticles[i].update();
+                            cursorParticles[i].draw();
+                            if (cursorParticles[i].life <= 0) {
+                                cursorParticles.splice(i, 1);
+                                i--;
+                            }
+                        }
+
+                        requestAnimationFrame(animateCursor);
+                    }
+
+                    animateCursor();
+
+                    // === ENHANCED INTERACTIVE PARTICLE NETWORK BACKGROUND ===
+                    const canvas = document.getElementById('bg-canvas');
+                    const ctx = canvas.getContext('2d');
+                    let particles = [];
+
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+
+                    window.addEventListener('resize', () => {
                         canvas.width = window.innerWidth;
                         canvas.height = window.innerHeight;
                         cursorCanvas.width = window.innerWidth;
                         cursorCanvas.height = window.innerHeight;
-                        });
+                        init(); // Reinitialize particles on resize
+                    });
 
-                        class Particle {
+                    class Particle {
                         constructor() {
-                        this.x = Math.random() * canvas.width;
-                        this.y = Math.random() * canvas.height;
-                        // Increased size by ~80% (from 1-3 to 1.8-5.4)
-                        this.size = (Math.random() * 2 + 1) * 1.8;
-                        this.speedX = Math.random() * 0.5 - 0.25;
-                        this.speedY = Math.random() * 0.5 - 0.25;
-                        // Increased opacity for clarity
-                        this.opacity = Math.random() * 0.5 + 0.3;
+                            this.x = Math.random() * canvas.width;
+                            this.y = Math.random() * canvas.height;
+                            this.size = Math.random() * 2.5 + 1.5; // Particle size: 1.5-4px
+                            this.baseSpeedX = Math.random() * 0.5 - 0.25; // Base drift speed
+                            this.baseSpeedY = Math.random() * 0.5 - 0.25;
+                            this.speedX = this.baseSpeedX;
+                            this.speedY = this.baseSpeedY;
+                            this.opacity = Math.random() * 0.4 + 0.3; // 0.3-0.7 opacity
+                            // Color variation: blue to purple spectrum
+                            this.hue = Math.random() * 60 + 220; // 220-280 (blue to purple)
                         }
 
                         update() {
-                        this.x += this.speedX;
-                        this.y += this.speedY;
+                            // Calculate distance from mouse
+                            const dx = cMouseX - this.x;
+                            const dy = cMouseY - this.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            const interactionRadius = 150;
 
-                        const dx = cMouseX - this.x;
-                        const dy = cMouseY - this.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
+                            // Mouse interaction: particles move away from cursor
+                            if (distance < interactionRadius) {
+                                const force = (interactionRadius - distance) / interactionRadius;
+                                const angle = Math.atan2(dy, dx);
+                                this.speedX = this.baseSpeedX - Math.cos(angle) * force * 3;
+                                this.speedY = this.baseSpeedY - Math.sin(angle) * force * 3;
+                            } else {
+                                // Gradually return to base speed
+                                this.speedX += (this.baseSpeedX - this.speedX) * 0.05;
+                                this.speedY += (this.baseSpeedY - this.speedY) * 0.05;
+                            }
 
-                        // Enhanced interaction: larger radius and stronger force
-                        if (distance < 150) { // Increased from 100 const force=(150 - distance) / 150; this.x -=(dx /
-                            distance) * force * 4; // Increased force from 2 to 4 this.y -=(dy / distance) * force * 4;
-                            } if (this.x < 0) this.x=canvas.width; if (this.x> canvas.width) this.x = 0;
-                            if (this.y < 0) this.y=canvas.height; if (this.y> canvas.height) this.y = 0;
+                            // Update position
+                            this.x += this.speedX;
+                            this.y += this.speedY;
+
+                            // Wrap around screen edges
+                            if (this.x < 0) this.x = canvas.width;
+                            if (this.x > canvas.width) this.x = 0;
+                            if (this.y < 0) this.y = canvas.height;
+                            if (this.y > canvas.height) this.y = 0;
+                        }
+
+                        draw() {
+                            ctx.fillStyle = `hsla(${this.hue}, 80%, 60%, ${this.opacity})`;
+                            ctx.beginPath();
+                            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    }
+
+                    function init() {
+                        particles = [];
+                        // Adjust particle count based on screen size
+                        const particleCount = Math.min(120, Math.floor((canvas.width * canvas.height) / 8000));
+                        for (let i = 0; i < particleCount; i++) {
+                            particles.push(new Particle());
+                        }
+                    }
+
+                    function connectParticles() {
+                        const maxDistance = 120; // Maximum distance for connections
+
+                        for (let i = 0; i < particles.length; i++) {
+                            for (let j = i + 1; j < particles.length; j++) {
+                                const dx = particles[i].x - particles[j].x;
+                                const dy = particles[i].y - particles[j].y;
+                                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                                if (distance < maxDistance) {
+                                    // Calculate opacity based on distance
+                                    const opacity = (1 - distance / maxDistance) * 0.5;
+
+                                    // Draw connection line
+                                    ctx.strokeStyle = `rgba(139, 92, 246, ${opacity})`;
+                                    ctx.lineWidth = 1;
+                                    ctx.beginPath();
+                                    ctx.moveTo(particles[i].x, particles[i].y);
+                                    ctx.lineTo(particles[j].x, particles[j].y);
+                                    ctx.stroke();
                                 }
+                            }
+                        }
+                    }
 
-                                draw() {
-                                ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity})`;
-                                ctx.beginPath();
-                                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                                ctx.fill();
-                                }
-                                }
+                    function animate() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                                function init() {
-                                particles = [];
-                                const particleCount = Math.min(100, Math.floor((canvas.width * canvas.height) /
-                                10000));
-                                for (let i = 0; i < particleCount; i++) { particles.push(new Particle()); } } function
-                                    animate() { ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                    particles.forEach(particle=> {
-                                    particle.update();
-                                    particle.draw();
-                                    });
+                        // Update and draw all particles
+                        particles.forEach(particle => {
+                            particle.update();
+                            particle.draw();
+                        });
 
-                                    particles.forEach((particleA, indexA) => {
-                                    particles.slice(indexA + 1).forEach(particleB => {
-                                    const dx = particleA.x - particleB.x;
-                                    const dy = particleA.y - particleB.y;
-                                    const distance = Math.sqrt(dx * dx + dy * dy);
+                        // Draw connections between nearby particles
+                        connectParticles();
 
-                                    // Enhanced connection visibility
-                                    if (distance < 120) { // Increased from 100 // Clearer lines
-                                        ctx.strokeStyle=`rgba(139, 92, 246, ${0.4 * (1 - distance / 120)})`;
-                                        ctx.lineWidth=0.8; // Thicker lines ctx.beginPath(); ctx.moveTo(particleA.x,
-                                        particleA.y); ctx.lineTo(particleB.x, particleB.y); ctx.stroke(); } }); });
-                                        requestAnimationFrame(animate); } init(); animate(); </script>
-</body>
+                        requestAnimationFrame(animate);
+                    }
+
+                    init();
+                    animate();
+                </script>
+            </body>
 
 </html>
+```

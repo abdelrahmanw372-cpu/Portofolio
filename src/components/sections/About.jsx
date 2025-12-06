@@ -23,7 +23,7 @@ const About = () => {
                 <div className="grid md:grid-cols-2 gap-12 mb-16">
                     {/* About Text */}
                     <ScrollReveal animation="slideRight">
-                        <div className="glass-effect rounded-xl p-8">
+                        <div className="glass-effect rounded-xl p-8 glow-effect-hover">
                             <h3 className="text-2xl font-bold text-gradient mb-6">
                                 Professional Excellence
                             </h3>
@@ -66,7 +66,7 @@ const About = () => {
 
                     {/* Skills Overview */}
                     <ScrollReveal animation="slideLeft">
-                        <div className="glass-effect rounded-xl p-8">
+                        <div className="glass-effect rounded-xl p-8 glow-effect-hover">
                             <h3 className="text-2xl font-bold text-gradient mb-6">
                                 Core Competencies
                             </h3>
@@ -124,7 +124,7 @@ const About = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: catIndex * 0.2 }}
-                                className="glass-effect rounded-xl p-6"
+                                className="glass-effect rounded-xl p-6 glow-effect-hover"
                             >
                                 <div className="flex items-center gap-3 mb-6">
                                     <category.icon size={24} className="text-accent-primary" />

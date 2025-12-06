@@ -27,7 +27,7 @@ function App() {
     }, []);
 
     return (
-        <div className="relative min-h-screen bg-dark-bg text-dark-text overflow-x-hidden">
+        <div className="relative min-h-screen text-dark-text overflow-x-hidden">
             {/* Custom Cursor */}
             {isCursorActive && <CustomCursor theme="dark" />}
 

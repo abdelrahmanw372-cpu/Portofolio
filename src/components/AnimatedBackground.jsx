@@ -13,6 +13,7 @@ const AnimatedBackground = () => {
         let nebulaClouds = [];
         let constellations = [];
         let cosmicDust = [];
+        let networkParticles = []; // New particle network layer
         let mouseX = 0;
         let mouseY = 0;
         let time = 0;
@@ -234,9 +235,76 @@ const AnimatedBackground = () => {
             }
         }
 
-        // Create organized star field (3 layers for depth)
-        for (let layer = 0; layer < 3; layer++) {
-            const starCount = Math.floor((canvas.width * canvas.height) / (15000 - layer * 3000));
+        // Network Particle class - prominent interactive particles that form networks
+        class NetworkParticle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 2; // Balanced size: 2-4px
+                this.baseSpeedX = Math.random() * 0.5 - 0.25;
+                this.baseSpeedY = Math.random() * 0.5 - 0.25;
+                this.speedX = this.baseSpeedX;
+                this.speedY = this.baseSpeedY;
+                this.opacity = Math.random() * 0.3 + 0.4; // Balanced visibility: 0.4-0.7
+                this.hue = Math.random() * 60 + 220; // Blue to purple spectrum
+            }
+
+            update() {
+                // Calculate distance from mouse
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const interactionRadius = 180;
+
+                // Strong mouse interaction: particles move away from cursor
+                if (distance < interactionRadius) {
+                    const force = (interactionRadius - distance) / interactionRadius;
+                    const angle = Math.atan2(dy, dx);
+                    this.speedX = this.baseSpeedX - Math.cos(angle) * force * 4;
+                    this.speedY = this.baseSpeedY - Math.sin(angle) * force * 4;
+                } else {
+                    // Gradually return to base speed
+                    this.speedX += (this.baseSpeedX - this.speedX) * 0.05;
+                    this.speedY += (this.baseSpeedY - this.speedY) * 0.05;
+                }
+
+                // Update position
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Wrap around screen edges
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+
+            draw() {
+                // Draw particle with glow
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.size * 2
+                );
+                gradient.addColorStop(0, `hsla(${this.hue}, 80%, 65%, ${this.opacity})`);
+                gradient.addColorStop(0.5, `hsla(${this.hue}, 80%, 65%, ${this.opacity * 0.5})`);
+                gradient.addColorStop(1, `hsla(${this.hue}, 80%, 65%, 0)`);
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Bright core
+                ctx.fillStyle = `hsla(${this.hue}, 90%, 70%, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Create organized star field (Reduced for cleaner look)
+        for (let layer = 0; layer < 2; layer++) { // Reduced from 3 layers to 2
+            const starCount = Math.floor((canvas.width * canvas.height) / (25000 - layer * 5000)); // Much fewer stars
             for (let i = 0; i < starCount; i++) {
                 stars.push(new Star(layer));
             }
@@ -254,10 +322,16 @@ const AnimatedBackground = () => {
             constellations.push(new Constellation());
         }
 
-        // Create cosmic dust
-        const dustCount = Math.floor((canvas.width * canvas.height) / 10000);
+        // Create cosmic dust (Reduced)
+        const dustCount = Math.floor((canvas.width * canvas.height) / 30000); // Significantly reduced dust
         for (let i = 0; i < dustCount; i++) {
             cosmicDust.push(new CosmicDust());
+        }
+
+        // Create network particles - Medium density
+        const networkCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 10000)); // Medium amount (~80)
+        for (let i = 0; i < networkCount; i++) {
+            networkParticles.push(new NetworkParticle());
         }
 
         // Mouse move handler
@@ -315,6 +389,31 @@ const AnimatedBackground = () => {
                         ctx.beginPath();
                         ctx.moveTo(dustA.x, dustA.y);
                         ctx.lineTo(dustB.x, dustB.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            // Update and draw network particles (prominent layer)
+            networkParticles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // Draw prominent connections between network particles
+            networkParticles.forEach((particleA, indexA) => {
+                networkParticles.slice(indexA + 1).forEach(particleB => {
+                    const dx = particleA.x - particleB.x;
+                    const dy = particleA.y - particleB.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 120) { // Closer connection distance for more connections
+                        const opacity = (1 - distance / 120) * 0.8; // VERY visible connections
+                        ctx.strokeStyle = `rgba(139, 92, 246, ${opacity})`; // Purple color
+                        ctx.lineWidth = 1.5; // Thicker lines
+                        ctx.beginPath();
+                        ctx.moveTo(particleA.x, particleA.y);
+                        ctx.lineTo(particleB.x, particleB.y);
                         ctx.stroke();
                     }
                 });
