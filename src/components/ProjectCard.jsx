@@ -49,7 +49,7 @@ const ProjectCard = ({ project, index }) => {
 
             {/* Technologies */}
             <div className="flex flex-wrap gap-2 mb-4">
-                {project.technologies.slice(0, 3).map((tech, i) => (
+                {project.technologies.map((tech, i) => (
                     <span
                         key={i}
                         className="px-3 py-1 bg-dark-surface rounded-full text-xs text-accent-primary border border-accent-primary/30"
@@ -57,11 +57,6 @@ const ProjectCard = ({ project, index }) => {
                         {tech}
                     </span>
                 ))}
-                {project.technologies.length > 3 && (
-                    <span className="px-3 py-1 bg-dark-surface rounded-full text-xs text-dark-muted">
-                        +{project.technologies.length - 3}
-                    </span>
-                )}
             </div>
 
             {/* Expanded Content */}
